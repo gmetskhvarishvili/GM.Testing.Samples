@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <!--
+      The sample app under test. It depends only on real GM.* runtime packages (here GM.Caching) —
+      NOT on any GM.Testing package. The test project is where GM.Testing.* is referenced. Once the
+      testing packages are published, the test project references them by PackageReference.
+    -->
+    <ItemGroup>
+        <PackageReference Include="GM.Caching" Version="1.0.0" />
+    </ItemGroup>
+
+</Project>
