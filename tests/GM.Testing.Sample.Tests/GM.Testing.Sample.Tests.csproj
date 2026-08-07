@@ -17,16 +17,17 @@
     </ItemGroup>
 
     <!--
-      References the sibling GM.Testing source repo by project path so the sample builds against
-      current code. Once the packages are published, swap these for:
-        <PackageReference Include="GM.Testing"           Version="1.0.0" />
-        <PackageReference Include="GM.Testing.AspNetCore" Version="1.0.0" />
-        <PackageReference Include="GM.Testing.Fakes"      Version="1.0.0" />
+      Published-package references — the shape the sample ships in once the GM.Testing packages are
+      live on nuget.org. For local development against the sibling source repo, use the ProjectReference
+      form on the feat/testing-sample branch instead.
     -->
     <ItemGroup>
-        <ProjectReference Include="..\..\..\GM.Testing\GM.Testing\GM.Testing.csproj" />
-        <ProjectReference Include="..\..\..\GM.Testing\GM.Testing.AspNetCore\GM.Testing.AspNetCore.csproj" />
-        <ProjectReference Include="..\..\..\GM.Testing\GM.Testing.Fakes\GM.Testing.Fakes.csproj" />
+        <PackageReference Include="GM.Testing" Version="1.0.0" />
+        <PackageReference Include="GM.Testing.AspNetCore" Version="1.0.0" />
+        <PackageReference Include="GM.Testing.Fakes" Version="1.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
         <ProjectReference Include="..\..\GM.Testing.Sample.API\GM.Testing.Sample.API.csproj" />
     </ItemGroup>
 
