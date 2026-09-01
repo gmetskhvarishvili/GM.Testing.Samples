@@ -22,11 +22,11 @@ public class SampleIntegrationTests
         var client = factory.CreateClient();
 
         // HTTP helpers: status + body in one call.
-        var postResponse = await client.PostAsJsonAsync("/profiles", new Profile("u1", "Ada"));
+        var postResponse = await client.PostAsJsonAsync("/api/v1/profiles", new Profile("u1", "Ada"));
         var created = await postResponse.ShouldBeCreatedAsync<Profile>();
         Assert.Equal("Ada", created.Name);
 
-        var fetched = await (await client.GetAsync("/profiles/u1")).ShouldBeOkAsync<Profile>();
+        var fetched = await (await client.GetAsync("/api/v1/profiles/u1")).ShouldBeOkAsync<Profile>();
         Assert.Equal(new Profile("u1", "Ada"), fetched);
 
         // Inspect the fake the app actually wrote through — same singleton instance.
@@ -40,7 +40,7 @@ public class SampleIntegrationTests
         using var factory = new GmWebApplicationFactory<Program>().WithServices(s => s.AddFakeCache());
         var client = factory.CreateClient();
 
-        await (await client.GetAsync("/profiles/absent")).ShouldBeNotFoundAsync();
+        await (await client.GetAsync("/api/v1/profiles/absent")).ShouldBeNotFoundAsync();
     }
 
     [Fact]
@@ -50,9 +50,20 @@ public class SampleIntegrationTests
             .WithConfig("Greeting", "hello-from-test");
         var client = factory.CreateClient();
 
-        using var response = await client.GetAsync("/config/greeting");
+        using var response = await client.GetAsync("/api/v1/config/greeting");
         var body = await response.ShouldBeOkAsync<GreetingDto>();
         Assert.Equal("hello-from-test", body.Greeting);
+    }
+
+    [Theory]
+    [InlineData("/health/live")]
+    [InlineData("/health/ready")]
+    public async Task Health_endpoints_report_healthy(string path)
+    {
+        using var factory = new GmWebApplicationFactory<Program>();
+        var client = factory.CreateClient();
+
+        await (await client.GetAsync(path)).ShouldBeOkAsync();
     }
 
     private sealed record GreetingDto(string Greeting);

@@ -12,7 +12,7 @@
       testing packages are published, the test project references them by PackageReference.
     -->
     <ItemGroup>
-        <PackageReference Include="GM.Caching" Version="1.0.0" />
+        <PackageReference Include="GM.Caching" Version="1.0.1" />
     </ItemGroup>
 
 </Project>
